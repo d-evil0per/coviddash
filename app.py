@@ -174,6 +174,7 @@ def index():
 
     
     data=dict()
+    print(states)
     data['states']=states['states']
     data['date']=today
     data['geolocation']=location.raw
