@@ -173,7 +173,7 @@ def index():
     location = locator.reverse(coordinates)
 
     
-    data={}
+    data=dict()
     data['states']=states['states']
     data['date']=today
     data['geolocation']=location.raw
