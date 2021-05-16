@@ -1,5 +1,5 @@
 from datetime import datetime,timedelta
-from cowin_api import CoWinAPI
+from API.api import CoWinAPI
 import geocoder
 from geopy.geocoders import Nominatim
 import pgeocode
