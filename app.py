@@ -169,6 +169,7 @@ def index():
     today=datetime.today()
     locator = Nominatim(user_agent="myGeocoder")
     g = geocoder.ip('me')
+    print(g)
     coordinates=",".join([str(x) for x in g.latlng])
     location = locator.reverse(coordinates)
 
