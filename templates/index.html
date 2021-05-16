@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>covidash</title>
+    <meta name="twitter:card" content="summary">
+    <meta name="description" content="CoviDash is a Platform that provides the information about the COVISHIELD or COVAXIN vaccine slots availability in a particular district and pin code for a particular Age and date.#covidShield #covaxin #covid-19 #covidresource">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href={{ url_for('static', filename='css/styles.min.css') }}>
+</head>
+
+<body style="font-family: Poppins, sans-serif;background: #e6e6e6;" onload="onloadFetchVaccineCenters()">
+    <!-- Start: header mobile -->
+    <div class="container-fluid d-block d-print-none d-sm-none d-md-none d-lg-none d-xl-none" style="color: #000;">
+        <div style="padding: 10px;">
+            <ul class="nav flex-column" style="padding-left: 10px;padding-right: 10px;">
+                <li class="nav-item">
+                    <div class="text-center"><span class="d-block" style="font-size: 24px;">CoviDash</span><span class="d-inline-block" style="padding: 2px;">India</span></div>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div>
+                    <div style="text-align: center;"><span>Share Kare, Care Kare.&nbsp;<i class="fa fa-heart" style="color: var(--red);"></i></span> <p>Copyright @ <a target="_blank" href="https://www.linkedin.com/in/rahuldubey4311/">Deviloper</a></p></div><!-- Start: Social Icons -->
+                    <div class="social-icons d-block" style="padding: 0px;background: transparent;"><a target="_blank" href="http://twitter.com/share?text=Check Vaccine availiabilty from the link below&url={{ request.base_url }}&hashtags=covid-19,covidash,covidvaccineslotcheker,covidShield,covaxin,covidresource"><i class="icon ion-social-twitter" style="color: rgb(117,121,128);font-size: 24px;border-style: none;border-color: var(--blue);"></i></a><a target="_blank" href="https://www.facebook.com/sharer.php?u={{ request.base_url }}&hashtag=%23covidresource&quote=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates."><i class="icon ion-social-facebook" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://telegram.me/share/url?url={{ request.base_url }}&text=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates"><i class="fa fa-paper-plane" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.base_url }}"><i class="icon ion-social-linkedin" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a></div><!-- End: Social Icons -->
+                </div>
+            </div>
+        </div>
+    </div><!-- End: header mobile -->
+    <!-- Start: header -->
+    <div class="container-fluid d-none d-print-block d-sm-block d-md-block d-lg-block d-xl-block" style="color: #000;margin-bottom: 80px;">
+        <div class="fixed-top" style="padding: 10px;">
+            <ul class="nav flex-column" style="padding-left: 10px;padding-right: 10px;">
+                <li class="nav-item">
+                    <div><span class="d-block" style="font-size: 24px;">CoviDash</span><span class="d-inline-block" style="padding: 2px;">India</span></div>
+                </li>
+            </ul>
+        </div>
+    </div><!-- End: header -->
+    <!-- Start: 1 Row 2 Columns -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Start: Filters -->
+            <div class="col-md-5 col-lg-4 col-xl-3 fixed-pos">
+                <!-- Start: Date -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <h6 class="text-muted card-subtitle mb-2">Date</h6><input class="form-control-sm no-outline" type="date" onchange="onloadFetchVaccineCenters()" id="schedule_date" value="{{data['date'].strftime('%Y-%m-%d')}}">
+                    </div>
+                </div><!-- End: Date -->
+                <!-- Start: search options -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <h6 class="text-muted card-subtitle mb-2">Search options</h6>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio"  name="searchOptions" onchange="onChangeSearchoptionsHandler()"  value="DISTRICT" id="formCheck-1"><label class="form-check-label" for="formCheck-1">District</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio"  name="searchOptions" onchange="onChangeSearchoptionsHandler()" value="PINCODE" id="formCheck-2" checked><label class="form-check-label" for="formCheck-2" >Picode</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: search options -->
+                <!-- Start: Pincode -->
+                <div class="card" style="margin:10px" id="searchByPincode_div">
+                    <div class="card-body">
+                        <input type="hidden" id="hidden_state" value="{{data['geolocation']['address']['state']}}">
+                        <h6 class="text-muted card-subtitle mb-2">Pincode</h6><input class="form-control-sm no-outline" id="data_pincode" onblur="onloadFetchVaccineCenters()" type="text" placeholder="Search by Pin code" value="{{data['geolocation']['address']['postcode']}}">
+                    </div>
+                </div><!-- End: Pincode -->
+                <!-- Start: Search by District -->
+                <div class="card" style="margin:10px;display: none;" id="searchByDistrict_div">
+                    <div class="card-body">
+                        <h6 class="text-muted card-subtitle mb-2">Search by district</h6>
+                        <div class="row">
+                            <div class="col">
+                                <select class="dropdown no-outline" onchange="onchangeGetDistrict(this)"  id="state_id"  >
+                                    <option value="0">Select State</option>
+                                    {% for d_state in data['states'] %}
+                                    <option value="{{d_state['state_id']}}" {% if d_state['state_name'].upper() == data['geolocation']['address']['state'].upper() %} selected {% endif %}>{{d_state['state_name']}}</option>
+                                    {% endfor %}
+                                </select> 
+                            
+                            </div>
+                            <div class="col">
+                                <select class="dropdown no-outline" id="district_id" onchange="onloadFetchVaccineCenters()">
+                                    <option value="">Select District</option>
+                                </select> 
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Search by District -->
+                <!-- Start: Min age limit -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <h6 class="text-muted card-subtitle mb-2">Min Age Limit</h6>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="minAgeLimit" id="formCheck-age18" value="18" checked><label class="form-check-label" for="formCheck-age18">18+</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="minAgeLimit" id="formCheck-age45" value="45"><label class="form-check-label" for="formCheck-age45">45+</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Min age limit -->
+                <!-- Start: Fee Type -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <h6 class="text-muted card-subtitle mb-2">Fee Type</h6>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="feeType" id="formCheck-free" value="Free" checked><label class="form-check-label" for="formCheck-free">Free</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="feeType"  id="formCheck-paid" value="Paid"><label class="form-check-label" for="formCheck-paid">Paid</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Fee Type -->
+                <!-- Start: Vaccine Type -->
+                <div class="card" style="margin:10px">
+                    <div class="card-body">
+                        <h6 class="text-muted card-subtitle mb-2">Vaccine type</h6>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="vaccineType" id="formCheck-cs" value="COVISHIELD" checked><label class="form-check-label" for="formCheck-cs">COVISHIELD</label></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="vaccineType" value="COVAXIN" id="formCheck-cw"><label class="form-check-label" for="formCheck-cw">COVAXIN</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Vaccine Type -->
+                <div class="d-none d-print-block d-sm-block d-md-block d-lg-block d-xl-block">
+                    <div style="text-align: center;"><span>Share Kare, Care Kare.&nbsp;<i class="fa fa-heart" style="color: var(--red);"></i></span> <p>Copyright @ <a target="_blank" href="https://www.linkedin.com/in/rahuldubey4311/">Deviloper</a></p></div><!-- Start: Social Icons -->
+                    <div class="social-icons d-block" style="padding: 0px;background: transparent;"><a target="_blank" href="http://twitter.com/share?text=Check Vaccine availiabilty from the link below&url={{ request.base_url }}&hashtags=covid-19,covidash,covidvaccineslotcheker,covidShield,covaxin,covidresource"><i class="icon ion-social-twitter" style="color: rgb(117,121,128);font-size: 24px;border-style: none;border-color: var(--blue);"></i></a><a target="_blank" href="https://www.facebook.com/sharer.php?u={{ request.base_url }}&hashtag=%23covidresource&quote=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates."><i class="icon ion-social-facebook" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://telegram.me/share/url?url={{ request.base_url }}&text=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates"><i class="fa fa-paper-plane" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.base_url }}"><i class="icon ion-social-linkedin" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a></div><!-- End: Social Icons -->
+                </div>
+            </div><!-- End: Filters -->
+            <!-- Start: Insights -->
+            <div class="col-md-7 col-lg-8 col-xl-9 offset-md-5 offset-lg-4 offset-xl-3">
+                <!-- Start: charts -->
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="chart" id="bargraph">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="chart" id="linegraph">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: charts -->
+                <!-- Start: Table -->
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Center Details</h4>
+                                <div class="table-responsive">
+                                    <div id="table_loader" ></div>
+                                    <table class="table table-borderless" id="table_main">
+                                        <thead style='font-size:12px'>
+                                            <tr>
+                                                <th  style='padding:2px;'>Center Name</th>
+                                                <th  style='padding:2px;'>Dose 1 Capacity</th>
+                                                <th  style='padding:2px;'>Dose 2 Capacity</th>
+                                                <th  style='padding:2px;'>Total Capacity</th>
+                                                <th  style='padding:2px;'>Date</th>
+                                                <th  style='padding:2px;'>Vaccine</th>
+                                                <th  style='padding:2px;'>Min Age Limit</th>
+                                                <th  style='padding:2px;'>Fee Type</th>
+                                                <th  style='padding:2px;'>Daily Timing</th>
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody id="center_table"  style='font-size:12px'>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End: Table -->
+                <!-- Start: API -->
+                <div class="row">
+                    <div class="col-xl-6" id="trends"><div class="bingwidget" data-type="covid19_trends" data-market="en-IN" data-language="en-IN" data-location-id="/India/{{data['geolocation']['address']['state'].capitalize()}}"></div></div>
+                    <div class="col-xl-6"><div class="bingwidget" data-type="covid19_map" data-market="en-IN" data-language="en-IN" data-location-id="/India"></div></div>
+                </div><!-- End: API -->
+            </div><!-- End: Insights -->
+        </div>
+    </div><!-- End: 1 Row 2 Columns -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="https://www.bing.com/widget/bootstrap.answer.js"></script>
+    <script src={{ url_for('static', filename='js/script.min.js') }}></script>
+    <script src={{ url_for('static', filename='js/main.js') }}></script>
+</body>
+
+</html>
