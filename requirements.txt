@@ -17,9 +17,9 @@ iniconfig==1.1.1
 itsdangerous==2.0.0
 Jinja2==3.0.0
 MarkupSafe==2.0.0
-numpy==1.20.3
+numpy==1.19.5
 packaging==20.9
-pandas==1.2.4
+pandas==1.1.5
 pgeocode==0.3.0
 plotly==4.14.3
 pluggy==0.13.1
