@@ -170,8 +170,8 @@ const onloadFetchVaccineCenters =() => {
                         data['payload'].forEach(buildTableData);
                         $("#bargraph").html("");
                         $("#linegraph").html("");
-                        Plotly.newPlot('bargraph', data['barchart'], {barmode: 'stack'} );
-                        Plotly.newPlot('linegraph', data['linechart'], {mode: 'markers'} );
+                        Plotly.newPlot('bargraph', data['barchart'], {barmode: 'stack',plot_bgcolor:'#e6e7ee',paper_bgcolor:'#e6e7ee'} );
+                        Plotly.newPlot('linegraph', data['linechart'], {mode: 'markers',plot_bgcolor:'#e6e7ee',paper_bgcolor:'#e6e7ee'} );
                         
                         
                             let trends='<div class="bingwidget" data-type="covid19_trends" data-market="en-IN" data-language="en-IN" data-location-id="/India/'+data['state_name']+'"></div>';

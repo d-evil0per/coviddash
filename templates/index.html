@@ -13,15 +13,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href={{ url_for('static', filename='css/styles.min.css') }}>
+    <style>
+        .card{
+            margin: 10px;
+            border-color: #d1d9e6;
+            background: #e6e7ee;
+            box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #fff;
+           
+          }
+        .cardtile{
+            border-color: #d1d9e6;
+            background: #e6e7ee;
+            box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #fff;
+           
+          }
+         
+          .no-outline {
+            margin: 10px;
+            background: #e6e7ee;
+            
+          }
+          
+          .shadow-soft{
+            box-shadow: 6px 6px 12px #b8b9be,-6px -6px 12px #fff!important;
+            border-radius: .55rem!important;
+          }
+          
+          
+    </style>
 </head>
 
-<body style="font-family: Poppins, sans-serif;background: #e6e6e6;" onload="onloadFetchVaccineCenters()">
+<body style="font-family: Poppins, sans-serif;background: #e6e7ee;" onload="onloadFetchVaccineCenters()">
     <!-- Start: header mobile -->
     <div class="container-fluid d-block d-print-none d-sm-none d-md-none d-lg-none d-xl-none" style="color: #000;">
         <div style="padding: 10px;">
             <ul class="nav flex-column" style="padding-left: 10px;padding-right: 10px;">
                 <li class="nav-item">
-                    <div class="text-center"><span class="d-block" style="font-size: 24px;">CoviDash</span><span class="d-inline-block" style="padding: 2px;">India</span></div>
+                    <div class="text-center shadow-soft"><span class="d-inline-block" style="font-size: 24px;">CoviDash</span><span class="d-inline-block" style="padding: 2px;font-size: 12px;">India</span></div>
                 </li>
             </ul>
         </div>
@@ -29,17 +57,17 @@
             <div class="col">
                 <div>
                     <div style="text-align: center;"><span>Share Kare, Care Kare.&nbsp;<i class="fa fa-heart" style="color: var(--red);"></i></span> <p>Copyright @ <a target="_blank" href="https://www.linkedin.com/in/rahuldubey4311/">Deviloper</a></p></div><!-- Start: Social Icons -->
-                    <div class="social-icons d-block" style="padding: 0px;background: transparent;"><a target="_blank" href="http://twitter.com/share?text=Check Vaccine availiabilty from the link below&url={{ request.base_url }}&hashtags=covid-19,covidash,covidvaccineslotcheker,covidShield,covaxin,covidresource"><i class="icon ion-social-twitter" style="color: rgb(117,121,128);font-size: 24px;border-style: none;border-color: var(--blue);"></i></a><a target="_blank" href="https://www.facebook.com/sharer.php?u={{ request.base_url }}&hashtag=%23covidresource&quote=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates."><i class="icon ion-social-facebook" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://telegram.me/share/url?url={{ request.base_url }}&text=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates"><i class="fa fa-paper-plane" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.base_url }}"><i class="icon ion-social-linkedin" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a></div><!-- End: Social Icons -->
+                    <div class="social-icons d-block" style="padding: 0px;background: transparent;"><a target="_blank" href="http://twitter.com/share?text=Check Vaccine availiabilty from the link below&url={{ request.base_url }}&hashtags=covid-19,covidash,covidvaccineslotcheker,covidShield,covaxin,covidresource"><i class="icon ion-social-twitter shadow-soft" style="color: rgb(117,121,128);font-size: 24px;border-style: none;border-color: var(--blue);"></i></a><a target="_blank" href="https://www.facebook.com/sharer.php?u={{ request.base_url }}&hashtag=%23covidresource&quote=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates."><i class="icon ion-social-facebook shadow-soft" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://telegram.me/share/url?url={{ request.base_url }}&text=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates"><i class="fa fa-paper-plane shadow-soft" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.base_url }}"><i class="icon ion-social-linkedin shadow-soft" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a></div><!-- End: Social Icons -->
                 </div>
             </div>
         </div>
     </div><!-- End: header mobile -->
     <!-- Start: header -->
-    <div class="container-fluid d-none d-print-block d-sm-block d-md-block d-lg-block d-xl-block" style="color: #000;margin-bottom: 80px;">
+    <div class="container-fluid d-none d-print-block d-sm-block d-md-block d-lg-block d-xl-block" style="color: #000;margin-bottom: 50px;">
         <div class="fixed-top" style="padding: 10px;">
             <ul class="nav flex-column" style="padding-left: 10px;padding-right: 10px;">
                 <li class="nav-item">
-                    <div><span class="d-block" style="font-size: 24px;">CoviDash</span><span class="d-inline-block" style="padding: 2px;">India</span></div>
+                    <div style="width: fit-content;" class="shadow-soft"><span class="d-inline-block" style="font-size: 24px;">CoviDash</span><span class="d-inline-block " style="padding: 5px;font-size: 12px;">India</span></div>
                 </li>
             </ul>
         </div>
@@ -143,7 +171,7 @@
                 </div><!-- End: Vaccine Type -->
                 <div class="d-none d-print-block d-sm-block d-md-block d-lg-block d-xl-block">
                     <div style="text-align: center;"><span>Share Kare, Care Kare.&nbsp;<i class="fa fa-heart" style="color: var(--red);"></i></span> <p>Copyright @ <a target="_blank" href="https://www.linkedin.com/in/rahuldubey4311/">Deviloper</a></p></div><!-- Start: Social Icons -->
-                    <div class="social-icons d-block" style="padding: 0px;background: transparent;"><a target="_blank" href="http://twitter.com/share?text=Check Vaccine availiabilty from the link below&url={{ request.base_url }}&hashtags=covid-19,covidash,covidvaccineslotcheker,covidShield,covaxin,covidresource"><i class="icon ion-social-twitter" style="color: rgb(117,121,128);font-size: 24px;border-style: none;border-color: var(--blue);"></i></a><a target="_blank" href="https://www.facebook.com/sharer.php?u={{ request.base_url }}&hashtag=%23covidresource&quote=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates."><i class="icon ion-social-facebook" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://telegram.me/share/url?url={{ request.base_url }}&text=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates"><i class="fa fa-paper-plane" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.base_url }}"><i class="icon ion-social-linkedin" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a></div><!-- End: Social Icons -->
+                    <div class="social-icons d-block " style="padding: 0px;background: transparent;"><a target="_blank" href="http://twitter.com/share?text=Check Vaccine availiabilty from the link below&url={{ request.base_url }}&hashtags=covid-19,covidash,covidvaccineslotcheker,covidShield,covaxin,covidresource"><i class="icon ion-social-twitter shadow-soft" style="color: rgb(117,121,128);font-size: 24px;border-style: none;border-color: var(--blue);"></i></a><a target="_blank" href="https://www.facebook.com/sharer.php?u={{ request.base_url }}&hashtag=%23covidresource&quote=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates."><i class="icon ion-social-facebook shadow-soft" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://telegram.me/share/url?url={{ request.base_url }}&text=CoviDash%20is%20a%20Platform%20that%20provides%20information%20about%20the%20COVISHIELD%20or%20COVAXIN%20vaccine%20slots%20available%20in%20a%20particular%20district%20and%20pin%20code%20for%20a%20particular%20Age%20and%20dates"><i class="fa fa-paper-plane shadow-soft" style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.base_url }}"><i class="icon ion-social-linkedin shadow-soft " style="border-style: none;color: rgb(117,121,128);font-size: 24px;"></i></a></div><!-- End: Social Icons -->
                 </div>
             </div><!-- End: Filters -->
             <!-- Start: Insights -->
@@ -204,8 +232,8 @@
                 </div><!-- End: Table -->
                 <!-- Start: API -->
                 <div class="row">
-                    <div class="col-xl-6" id="trends"><div class="bingwidget" data-type="covid19_trends" data-market="en-IN" data-language="en-IN" data-location-id="/India/{{data['geolocation']['address']['state'].capitalize()}}"></div></div>
-                    <div class="col-xl-6"><div class="bingwidget" data-type="covid19_map" data-market="en-IN" data-language="en-IN" data-location-id="/India"></div></div>
+                    <div class="col-xl-6 cardtile" id="trends"><div class="bingwidget cardtile" data-type="covid19_trends" data-market="en-IN" data-language="en-IN" data-location-id="/India/{{data['geolocation']['address']['state'].capitalize()}}"></div></div>
+                    <div class="col-xl-6 cardtile"><div class="bingwidget cardtile" data-type="covid19_map" data-market="en-IN" data-language="en-IN" data-location-id="/India"></div></div>
                 </div><!-- End: API -->
             </div><!-- End: Insights -->
         </div>
