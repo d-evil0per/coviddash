@@ -59,7 +59,7 @@ const onchangeGetDistrict =(element) =>{
             let option ="<option value=''>Select District</option>";
             $("#district_id").html(option);
             data.forEach(iterate_data);
-            let loading='<div class="d-flex justify-content-center text-center" style="height:400px;background:#fff;align-items: center;"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"> <span class="sr-only">Loading...</span></div></div>';
+            let loading='<div class="d-flex justify-content-center text-center" style="height:400px;background:#e6e7ee;align-items: center;"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"> <span class="sr-only">Loading...</span></div></div>';
             $("#trends").html(loading);
             setTimeout(()=>{
                 state=$("#state_id  option:selected").text();
@@ -154,7 +154,7 @@ const onloadFetchVaccineCenters =() => {
             data: { s_date:s_date,option:option,locationKey:locationKey, minage: minage, feeType:feeType, vaccineType:vaccineType,state_id:state_id},
             dataType: "json",
             success: (data) =>{
-                let loading='<div class="d-flex justify-content-center text-center" style="height:400px;background:#fff;align-items: center;"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"> <span class="sr-only">Loading...</span></div></div>';
+                let loading='<div class="d-flex justify-content-center text-center" style="height:400px;background:#e6e7ee;align-items: center;"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"> <span class="sr-only">Loading...</span></div></div>';
             $("#table_loader").show();
             $("#table_main").hide();
             $("#table_loader").html(loading);
