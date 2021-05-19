@@ -14,6 +14,21 @@ const onChangeSearchoptionsHandler = () => {
 };
 
 
+const buildTableData_medical =(item,index)=>{
+    let row,td="";
+
+    row+="<tr>";
+    td+="<td style='padding:2px;'>"+item['name']+"</td>";
+    td+="<td style='padding:2px;'>"+item['city']+"</td>";
+    td+="<td style='padding:2px;'>"+item['state']+"</td>";
+    td+="<td style='padding:2px;'>"+item['ownership']+"</td>";
+    td+="<td style='padding:2px;'>"+item['admissionCapacity']+"</td>";
+    td+="<td style='padding:2px;'>"+item['hospitalBeds']+"</td>";
+    row+=td+"</tr>";
+    $("#mc_table").append(row);
+}
+
+
 const buildTableData = (item,index) =>{
 
     let row,td="";
@@ -59,14 +74,25 @@ const onchangeGetDistrict =(element) =>{
             let option ="<option value=''>Select District</option>";
             $("#district_id").html(option);
             data.forEach(iterate_data);
-            let loading='<div class="d-flex justify-content-center text-center" style="height:400px;background:#e6e7ee;align-items: center;"><div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"> <span class="sr-only">Loading...</span></div></div>';
-            $("#trends").html(loading);
+            $("#case_confirmed").html("0");
+            $("#case_active").html("0");
+            $("#case_recovered").html("0");
+            $("#case_deceased").html("0");
+
+            $("#state_ruralHospitals").html("0");
+            $("#state_ruralBeds").html("0");
+            $("#state_urbanHospitals").html("0");
+            $("#state_urbanBeds").html("0");
+            $("#state_totalHospitals").html("0");
+            $("#state_totalBeds").html("0");
+
             setTimeout(()=>{
                 state=$("#state_id  option:selected").text();
-                let trends='<div class="bingwidget" data-type="covid19_trends" data-market="en-IN" data-language="en-IN" data-location-id="/India/'+state+'"></div>';
-                $("#trends").html(trends);
-                $.getScript("https://www.bing.com/widget/bootstrap.answer.js");
-            },500);
+                $("#cases_state").html(state);
+                $("#hb_state").html(state);
+                $("#mc_state").html(state);
+                $("#helpline_state").html(state);
+                        },500);
             
            
            
@@ -160,24 +186,47 @@ const onloadFetchVaccineCenters =() => {
             $("#table_loader").html(loading);
             $("#bargraph").html(loading);
             $("#linegraph").html(loading);
-            $("#trends").html(loading);
                 setTimeout(()=>{
                     if(data['status']=="success")
                     {
                         $("#table_loader").html("");
                         $("#table_main").show();
                         $("#center_table").html("");
-                        data['payload'].forEach(buildTableData);
+                        if(data['payload'].length>0)
+                        {
+                            data['payload'].forEach(buildTableData);
+                        }
+                        else{
+                                row='<tr><td></td><td></td><td></td><td>No Data Available</td><td></td><td></td><td></td><td></td><td></td></tr>';
+                                $("#center_table").html(row);
+                        }
+                        
                         $("#bargraph").html("");
                         $("#linegraph").html("");
-                        Plotly.newPlot('bargraph', data['barchart'], {barmode: 'stack',plot_bgcolor:'#e6e7ee',paper_bgcolor:'#e6e7ee'} );
-                        Plotly.newPlot('linegraph', data['linechart'], {mode: 'markers',plot_bgcolor:'#e6e7ee',paper_bgcolor:'#e6e7ee'} );
-                        
-                        
-                            let trends='<div class="bingwidget" data-type="covid19_trends" data-market="en-IN" data-language="en-IN" data-location-id="/India/'+data['state_name']+'"></div>';
-                            $("#trends").html(trends);
-                            $.getScript("https://www.bing.com/widget/bootstrap.answer.js");
-                       
+                        $("#case_confirmed").html(data['cases']['confirmed']);
+                        $("#case_active").html(data['cases']['active']);
+                        $("#case_recovered").html(data['cases']['recovered']);
+                        $("#case_deceased").html(data['cases']['deaths']);
+
+                        $("#state_ruralHospitals").html(data['beds']['ruralHospitals']);
+                        $("#state_ruralBeds").html(data['beds']['ruralBeds']);
+                        $("#state_urbanHospitals").html(data['beds']['urbanHospitals']);
+                        $("#state_urbanBeds").html(data['beds']['urbanBeds']);
+                        $("#state_totalHospitals").html(data['beds']['totalHospitals']);
+                        $("#state_totalBeds").html(data['beds']['totalBeds']);
+                        $("#state_helpline").html(data['contact']);
+                        Plotly.newPlot('bargraph', data['barchart'], {title:{text:'Total Availability Per Dose'},yaxis:{title:{text: 'Slots'}},xaxis: {title: {text: 'Dates'}},barmode: 'stack',plot_bgcolor:'#e6e7ee',paper_bgcolor:'#e6e7ee'} );
+                        Plotly.newPlot('linegraph', data['linechart'], {title:{text:'Total Availability Per Center'},yaxis:{title:{text: 'Slots'}},xaxis: {title: {text: 'Centers'}},mode: 'markers',plot_bgcolor:'#e6e7ee',paper_bgcolor:'#e6e7ee'} );
+                        Plotly.newPlot('testinggraph', data['sample_graph'], {title:{text:'Sample Collections'},yaxis:{title:{text: 'Count'}},xaxis: {title: {text: 'Dates'}},mode: 'markers',plot_bgcolor:'#e6e7ee',paper_bgcolor:'#e6e7ee'} );
+                        $("#mc_table").html("");
+                        if(data['medical_colleges'].length>0)
+                        {
+                            data['medical_colleges'].forEach(buildTableData_medical);
+                        }
+                        else{
+                                row='<tr><td></td><td></td><td>No Data Available</td><td></td><td></td><td></td></tr>';
+                                $("#mc_table").html(row);
+                        }
                             
                     }
                 },500); 

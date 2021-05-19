@@ -54,3 +54,33 @@ class CoWinAPI(BaseApi):
                                     min_age_limt: int = None):
         return self.get_availability_by_base(caller='pincode', areas=pin_code,
                                              date=date, min_age_limt=min_age_limt)
+    
+    def get_latest_case_counts(self):
+        url=Constants.case_counts_latest
+        curr_result=self._call_api(url)
+        return curr_result
+    
+    def get_notifications(self):
+        url=Constants.notifications
+        curr_result=self._call_api(url)
+        return curr_result
+
+    def get_testing_history(self):
+        url=Constants.testing_counts_history
+        curr_result=self._call_api(url)
+        return curr_result
+
+    def get_hospital_beds(self):
+        url=Constants.hospitals_beds
+        curr_result=self._call_api(url)
+        return curr_result
+
+    def get_medical_colleges(self):
+        url=Constants.hospitals_medical_colleges
+        curr_result=self._call_api(url)
+        return curr_result
+
+    def get_contacts(self):
+        url=Constants.helpline_contacts
+        curr_result=self._call_api(url)
+        return curr_result

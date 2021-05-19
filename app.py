@@ -1,4 +1,4 @@
-from datetime import datetime,timedelta
+from datetime import date, datetime,timedelta
 from API.api import CoWinAPI
 import geocoder
 from geopy.geocoders import Nominatim
@@ -155,12 +155,162 @@ def getCenterdetails():
     ldata=[
             {'name':'Centers', 'x':lkeys, 'y':lvalue,'type':'scatter'},
     ]
+
+    testing_report=cowin.get_testing_history()
+    testing_data=[]
+    for test_rep in testing_report['data']:
+        temp={}
+        temp['Date']=test_rep['day']
+        year,month,day=map(int,test_rep['day'].split("-"))
+        actualtime=10000*year + 100*month + day
+        temp['int_date']=actualtime
+        temp['totalSamplesTested']=test_rep['totalSamplesTested']
+        testing_data.append(temp)
+    ind=0
+    testing_data_df={}
+    for d_df in testing_data:
+        testing_data_df[ind]=d_df
+        ind+=1
+
+    df_testing_data=pd.DataFrame.from_dict(testing_data_df, orient='index')
+    today=datetime.today()
+    t_y,t_m,t_d=map(int,str(today.strftime("%Y-%m-%d")).split("-"))
+    t_startingpoint=datetime(year,month,day)-timedelta(7)
+    t_y,t_m,t_d=map(int,str(t_startingpoint.strftime("%Y-%m-%d")).split("-"))
+    t_actualtime=10000*t_y + 100*t_m + t_d
+    # print(t_actualtime)
+    # print(df_testing_data.head(1))
+    test_df=df_testing_data.loc[df_testing_data['int_date']>t_actualtime]
+    tg_key=[i for i in test_df['Date']]
+    tg_value=[i for i in test_df['totalSamplesTested'] ]
+    tgdata=[
+            {'name':'Testing Samples Collected', 'x':tg_key, 'y':tg_value,'type':'scatter'},
+    ]
+
+
+    cases=cowin.get_latest_case_counts()
+    case_data=[]
+    for case_rep in cases['data']['regional']:
+        temp={}
+        temp['loc']=case_rep['loc']
+        temp['totalConfirmed']=case_rep['totalConfirmed']
+        temp['discharged']=case_rep['discharged']
+        temp['deaths']=case_rep['deaths']
+        case_data.append(temp)
+    ind=0
+    case_data_df={}
+    for d_df in case_data:
+        case_data_df[ind]=d_df
+        ind+=1
+
+    df_case_data=pd.DataFrame.from_dict(case_data_df, orient='index')
+    case_df=df_case_data.loc[df_case_data['loc'] == state_name]
+    case_state={}
+    confirmed=int(case_df['totalConfirmed'])
+    active=int((case_df['totalConfirmed']-(case_df['discharged']+case_df['deaths'])))
+    recovered=int(case_df['discharged'])
+    deaths=int(case_df['deaths'])
+    case_state['confirmed']="{:,}".format(confirmed,",")
+    case_state['active']="{:,}".format(active,",")
+    case_state['recovered']="{:,}".format(recovered,",")
+    case_state['deaths']="{:,}".format(deaths,",")
+
+    hospital_beds=cowin.get_hospital_beds()
+    hospital_beds_data=[]
+    for beds in hospital_beds['data']['regional']:
+        temp={}
+        temp['state']=beds['state']
+        temp['ruralHospitals']=beds['ruralHospitals']
+        temp['urbanHospitals']=beds['urbanHospitals']
+        temp['ruralBeds']=beds['ruralBeds']
+        temp['urbanBeds']=beds['urbanBeds']
+        temp['totalHospitals']=beds['totalHospitals']
+        temp['totalBeds']=beds['totalBeds']
+        hospital_beds_data.append(temp)
+    ind=0
+    hospital_beds_data_df={}
+    for d_df in hospital_beds_data:
+        hospital_beds_data_df[ind]=d_df
+        ind+=1
+
+    df_beds_data=pd.DataFrame.from_dict(hospital_beds_data_df, orient='index')
+    beds_df=df_beds_data.loc[df_beds_data['state'] == state_name]
+    hospital_beds={}
+    ruralHospitals=int(beds_df['ruralHospitals'])
+    ruralBeds=int(beds_df['ruralBeds'])
+    urbanHospitals=int(beds_df['urbanHospitals'])
+    urbanBeds=int(beds_df['urbanBeds'])
+    totalHospitals=int(beds_df['totalHospitals'])
+    totalBeds=int(beds_df['totalBeds'])
+    hospital_beds['ruralHospitals']="{:,}".format(ruralHospitals,",")
+    hospital_beds['ruralBeds']="{:,}".format(ruralBeds,",")
+    hospital_beds['urbanHospitals']="{:,}".format(urbanHospitals,",")
+    hospital_beds['urbanBeds']="{:,}".format(urbanBeds,",")
+    hospital_beds['totalHospitals']="{:,}".format(totalHospitals,",")
+    hospital_beds['totalBeds']="{:,}".format(totalBeds,",")
+
+
+
+    medical_colleges=cowin.get_medical_colleges()
+    medical_colleges_data=[]
+    for colleges in medical_colleges['data']['medicalColleges']:
+        temp={}
+        temp['state']=colleges['state']
+        temp['name']=colleges['name']
+        temp['city']=colleges['city']
+        temp['ownership']=colleges['ownership']
+        temp['admissionCapacity']=colleges['admissionCapacity']
+        temp['hospitalBeds']=colleges['hospitalBeds']
+        medical_colleges_data.append(temp)
+    ind=0
+    medical_colleges_data_df={}
+    for d_df in medical_colleges_data:
+        medical_colleges_data_df[ind]=d_df
+        ind+=1
+
+    df_medical_colleges_data=pd.DataFrame.from_dict(medical_colleges_data_df, orient='index')
+    modified_state_name=""
+    if state_name=="Andaman and Nicobar Islands":
+        modified_state_name="A & N Islands"
+    else:
+        modified_state_name=state_name.replace(" and "," & ")
+    print(modified_state_name)
+    medical_colleges_df=df_medical_colleges_data.loc[df_medical_colleges_data['state'] == modified_state_name]
+    medical_colleges_final=[]
+
+    for index,row in medical_colleges_df.iterrows():
+        temp={}
+        admissionCapacity=row['admissionCapacity']
+        hospitalBeds=row['hospitalBeds']
+        temp['state']=row['state']
+        temp['name']=row['name']
+        temp['city']=row['city']
+        temp['ownership']=row['ownership']
+        temp['admissionCapacity']=admissionCapacity
+        temp['hospitalBeds']=hospitalBeds
+        medical_colleges_final.append(temp)
+
+
+
+    contact_details=cowin.get_contacts()
+    contact_data=""
+    for contact in contact_details['data']['contacts']['regional']:
+        if contact['loc'] ==state_name:
+            contact_data=contact['number']
+
+
+
     # graphJSON = json.dumps(gdata, cls=plotly.utils.PlotlyJSONEncoder)
     data['status']="success"
     data['payload']=data_dict
     data['barchart']=gdata
     data['linechart']=ldata
     data['state_name']=state_name
+    data['sample_graph']=tgdata
+    data['cases']=case_state
+    data['beds']=hospital_beds
+    data['medical_colleges']=medical_colleges_final
+    data['contact']=contact_data
     # data['barchart']=barchartfig.show()
     return jsonify(data)
 @app.route('/')
@@ -169,17 +319,29 @@ def index():
     today=datetime.today()
     locator = Nominatim(user_agent="myGeocoder")
     g = geocoder.ip('me')
-    print(g)
+    # print(g)
     coordinates=",".join([str(x) for x in g.latlng])
     location = locator.reverse(coordinates)
+    notifications=cowin.get_notifications()
+    # print(notifications['data'])
+    cases=cowin.get_latest_case_counts()
+    hospital_beds=cowin.get_hospital_beds()
+    contact=cowin.get_contacts()
 
+    # print(cases)
+    
     
     data=dict()
-    print(states)
+    # print(states)
     data['states']=states['states']
     data['date']=today
     data['geolocation']=location.raw
-    # print(states)
+    data['notifications']=notifications['data']
+    data['case_summary']=cases['data']['summary']
+    data['hospital_beds_summary']=hospital_beds['data']['summary']
+    data['contact']=contact['data']['contacts']['primary']
+    
+    
     return render_template('index.html',data=data)
 
 
