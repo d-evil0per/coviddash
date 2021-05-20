@@ -68,9 +68,16 @@
                 <!-- Start: Date -->
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Date</h6><input class="form-control-sm no-outline" type="date" 
-                        style="background: rgb(230,230,230);"
-                        onchange="onloadFetchVaccineCenters()" id="schedule_date" value="{{data['date'].strftime('%Y-%m-%d')}}">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Date</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_date','#fil-date-icon')"><i class="fa fa-plus" id="fil-date-icon"></i></div>
+                        </div>
+                        <div class="row" style="display: none;" id="fil_date"> 
+                            <input class="form-control-sm no-outline" type="date" onchange="onloadFetchVaccineCenters()" id="schedule_date" value="{{data['date'].strftime('%Y-%m-%d')}}">
+                        </div>
+                      
                     </div>
                 </div><!-- End: Date -->
             </div>
@@ -79,8 +86,14 @@
                 <!-- Start: search options -->
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Search options</h6>
-                        <div class="row">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Search options</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_so','#fil-so-icon')"><i class="fa fa-plus" id="fil-so-icon"></i></div>
+                        </div>
+                        
+                        <div class="row"  style="display: none;" id="fil_so">
                             <div class="col">
                                 <div class="form-check"><input class="form-check-input" type="radio"  name="searchOptions" onchange="onChangeSearchoptionsHandler()"  value="DISTRICT" id="formCheck-1"><label class="form-check-label" for="formCheck-1">District</label></div>
                             </div>
@@ -95,8 +108,17 @@
                 <!-- Start: Pincode -->
                 <div class="card" style="margin:10px" id="searchByPincode_div">
                     <div class="card-body">
-                        <input type="hidden" id="hidden_state" value="{{data['geolocation']['address']['state']}}">
-                        <h6 class="text-muted card-subtitle mb-2">Pincode</h6><input class="form-control-sm no-outline" id="data_pincode" onblur="onloadFetchVaccineCenters()" type="text" placeholder="Search by Pin code" value="{{data['geolocation']['address']['postcode']}}">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <input type="hidden" id="hidden_state" value="{{data['geolocation']['address']['state']}}">
+                                <h6 class="text-muted card-subtitle mb-2">Pincode</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_pincode','#fil-pincode-icon')"><i class="fa fa-plus" id="fil-pincode-icon"></i></div>
+                        </div>
+                        <div class="row"  style="display: none;" id="fil_pincode">
+                            <input class="form-control-sm no-outline" id="data_pincode" onblur="onloadFetchVaccineCenters()" type="text" placeholder="Search by Pin code" value="{{data['geolocation']['address']['postcode']}}">
+                        </div>
+                       
                     </div>
                 </div><!-- End: Pincode -->
             </div>
@@ -104,8 +126,16 @@
                 <!-- Start: Search by District -->
                 <div class="card" style="margin:10px;display: none;" id="searchByDistrict_div">
                     <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Search by district</h6>
-                        <div class="row">
+                        
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Search by district</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_district','#fil-district-icon')"><i class="fa fa-plus" id="fil-district-icon"></i></div>
+                        </div>
+
+
+                        <div class="row"  style="display: none;" id="fil_district">
                             <div class="col">
                                 <select class="dropdown no-outline" onchange="onchangeGetDistrict(this)"  id="state_id"  >
                                     <option value="0">Select State</option>
@@ -129,8 +159,14 @@
                 <!-- Start: Min age limit -->
                 <div class="card" style="margin:10px">
                     <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Min Age Limit</h6>
-                        <div class="row">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Min Age Limit</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_minage','#fil-minage-icon')"><i class="fa fa-plus" id="fil-minage-icon"></i></div>
+                        </div>
+                        
+                        <div class="row" style="display: none;" id="fil_minage">
                             <div class="col">
                                 <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="minAgeLimit" id="formCheck-age18" value="18" checked><label class="form-check-label" for="formCheck-age18">18+</label></div>
                             </div>
@@ -145,8 +181,14 @@
                 <!-- Start: Fee Type -->
                 <div class="card" style="margin:10px">
                     <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Fee Type</h6>
-                        <div class="row">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Fee Type</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_fee','#fil-fee-icon')"><i class="fa fa-plus" id="fil-fee-icon"></i></div>
+                        </div>
+                        
+                        <div class="row" style="display: none;" id="fil_fee">
                             <div class="col">
                                 <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="feeType" id="formCheck-free" value="Free" checked><label class="form-check-label" for="formCheck-free">Free</label></div>
                             </div>
@@ -161,8 +203,14 @@
                 <!-- Start: Vaccine Type -->
                 <div class="card" style="margin:10px">
                     <div class="card-body">
-                        <h6 class="text-muted card-subtitle mb-2">Vaccine type</h6>
-                        <div class="row">
+                        <div class="row justify-content-between">
+                            <div class="col-10 col-sm-10 col-xl-10">
+                                <h6 class="text-muted card-subtitle mb-2">Vaccine type</h6>
+                            </div>
+                            <div class="col-2 col-sm-2 col-xl-2 text-right" onclick="filteroptiontoggle('#fil_vaccine','#fil-vaccine-icon')"><i class="fa fa-plus" id="fil-vaccine-icon"></i></div>
+                        </div>
+                        
+                        <div class="row" style="display: none;" id="fil_vaccine">
                             <div class="col">
                                 <div class="form-check"><input class="form-check-input" type="radio" onchange="onloadFetchVaccineCenters()" name="vaccineType" id="formCheck-cs" value="COVISHIELD" checked><label class="form-check-label" for="formCheck-cs">COVISHIELD</label></div>
                             </div>

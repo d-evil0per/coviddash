@@ -11,3 +11,18 @@ const filtertoggle=()=>{
             }
         });
 };
+
+
+const filteroptiontoggle=(element,icon)=>{
+    
+    $(element).slideToggle("slow",() => {
+            // check paragraph once toggle effect is completed
+            if($(element).is(":visible")){
+                $(icon).removeClass('fa fa-plus');
+                $(icon).addClass('fa fa-minus');
+            } else{
+                $(icon).removeClass('fa fa-minus');
+                $(icon).addClass('fa fa-plus');
+            }
+        });
+}
