@@ -16,9 +16,9 @@ you can check the website from this <a target="_blank" href="https://pro-course-
 #### Pre-requistes 
 
 - You can check my  [Covidash](https://github.com/d-evil0per/coviddash) GitHub repository and download it as a zip file or you can also clone it using git in command prompt or terminal by using the below command.
-        $ git clone https://github.com/d-evil0per/coviddash
+<pre><code>$ git clone https://github.com/d-evil0per/coviddash</code></pre>
 - navigate to `covidash` directory
-        cd covidash
+<pre><code>cd covidash</code></pre>
 - Project Directory Tree is shown below:
 
 <pre><code>
@@ -77,12 +77,12 @@ You need to install all the required libraries used in this project. You can fin
 > Check [Creating Virtual Environment in Python ](https://deviloper.in/creating-virtual-environment-in-python)  blog to install  Virtual environment in python.
 
 - Installing requrements.txt using pip
-        pip install -r requirements.txt
+<pre><code>pip install -r requirements.txt</code></pre>
 
 #### **Execution**
 
 - Windows
-        py wsgi.py
+<pre><code>py wsgi.py</code></pre>
 
 - Linux & MacOS
-        python3 wsgi.py
+<pre><code>python3 wsgi.py</code></pre>
